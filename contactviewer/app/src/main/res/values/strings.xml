@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">kotlin2018picha</string>
+    <string name="take_another_photo">Select Contact to Display</string>
+    <string name="pick_action">Capture from camera or Select photo from gallery</string>
+</resources>
