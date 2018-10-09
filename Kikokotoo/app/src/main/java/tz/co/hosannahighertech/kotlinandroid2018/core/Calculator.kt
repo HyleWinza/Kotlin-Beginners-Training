@@ -10,16 +10,16 @@ class Calculator {
         when(currentOperation)
         {
             "+" -> {
-                currentState = currentNumber.toDouble().plus(currentState)
+                currentState = currentState.plus(currentNumber.toDouble())
             }
             "-" -> {
-                currentState = currentNumber.toDouble().minus(currentState)
+                currentState = currentState.minus(currentNumber.toDouble())
             }
             "x" -> {
-                currentState = currentNumber.toDouble().times(currentState)
+                currentState = currentState.times(currentNumber.toDouble())
             }
             "/" -> {
-                currentState = currentNumber.toDouble().div(currentState)
+                currentState = currentState.div(currentNumber.toDouble())
             }
         }
     }
