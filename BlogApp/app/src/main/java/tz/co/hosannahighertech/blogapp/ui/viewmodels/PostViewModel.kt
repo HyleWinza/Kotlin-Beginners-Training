@@ -21,10 +21,16 @@ import tz.co.hosannahighertech.blogapp.models.Post
  */
 class PostViewModel(app:Application) : AndroidViewModel(app) {
     private val livePosts = MutableLiveData<List<Post>>()
+    private val liveNetStatus = MutableLiveData<Boolean>()
 
     fun getPostLiveData() : LiveData<List<Post>>
     {
         return livePosts
+    }
+
+    fun getNetStatus() : LiveData<Boolean>
+    {
+        return liveNetStatus
     }
 
     fun loadPosts() {
@@ -34,12 +40,16 @@ class PostViewModel(app:Application) : AndroidViewModel(app) {
                 .build()
                 .create(BlogApi::class.java)
 
+        liveNetStatus.postValue(true) //start loading
+
         api.getPosts().enqueue(object:Callback<List<Post>>{
             override fun onFailure(call: Call<List<Post>>, t: Throwable) {
-
+                liveNetStatus.postValue(false)
+                //display error message
             }
 
             override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+                liveNetStatus.postValue(false)
                 livePosts.postValue(response.body())
             }
 

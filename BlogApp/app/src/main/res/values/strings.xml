@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">BlogApp</string>
     <string name="title_blog_posts">Blog Posts</string>
+    <string name="processing_request_wait">Processing request, wait...!</string>
 </resources>

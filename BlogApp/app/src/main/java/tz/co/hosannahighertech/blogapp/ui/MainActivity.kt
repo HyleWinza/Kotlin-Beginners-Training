@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
+import android.view.View
 import kotlinx.android.synthetic.main.activity_main.*
 import tz.co.hosannahighertech.blogapp.R
 import tz.co.hosannahighertech.blogapp.models.Post
@@ -32,6 +33,27 @@ class MainActivity : AppCompatActivity() {
                 adapter.pushPosts(it)
         })
 
+        viewModel.getNetStatus().observe(this, Observer<Boolean>{
+            if(it!=null)
+            {
+                showProgress(it)
+            }
+            showProgress(false)
+        })
+
         viewModel.loadPosts()
+    }
+
+    private fun showProgress(show: Boolean) {
+        if(show)
+        {
+            containerMain.visibility = View.GONE
+            containerProgress.visibility = View.VISIBLE
+        }
+        else
+        {
+            containerMain.visibility = View.VISIBLE
+            containerProgress.visibility = View.GONE
+        }
     }
 }
