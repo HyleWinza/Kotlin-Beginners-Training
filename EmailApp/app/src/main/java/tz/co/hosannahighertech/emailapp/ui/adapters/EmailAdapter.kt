@@ -4,6 +4,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.email_list_item.view.*
 import tz.co.hosannahighertech.emailapp.R
 import tz.co.hosannahighertech.emailapp.models.Email
@@ -44,6 +45,8 @@ class EmailAdapter(val emails: List<Email>) : RecyclerView.Adapter<EmailAdapter.
             else
                 subject
         }
+
+        Picasso.get().load(model.photo).into(holder.view.imageView)
     }
 
     override fun getItemCount(): Int {
