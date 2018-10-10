@@ -4,6 +4,12 @@ import android.app.Application
 import android.arch.lifecycle.AndroidViewModel
 import android.arch.lifecycle.LiveData
 import android.arch.lifecycle.MutableLiveData
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import tz.co.hosannahighertech.blogapp.api.BlogApi
 import tz.co.hosannahighertech.blogapp.models.Post
 
 /**
@@ -18,10 +24,26 @@ class PostViewModel(app:Application) : AndroidViewModel(app) {
 
     fun getPostLiveData() : LiveData<List<Post>>
     {
-        return livePosts;
+        return livePosts
     }
 
     fun loadPosts() {
+        val api = Retrofit.Builder()
+                .addConverterFactory(GsonConverterFactory.create())
+                .baseUrl("https://jsonplaceholder.typicode.com/")
+                .build()
+                .create(BlogApi::class.java)
+
+        api.getPosts().enqueue(object:Callback<List<Post>>{
+            override fun onFailure(call: Call<List<Post>>, t: Throwable) {
+
+            }
+
+            override fun onResponse(call: Call<List<Post>>, response: Response<List<Post>>) {
+                livePosts.postValue(response.body())
+            }
+
+        })
 
     }
 }

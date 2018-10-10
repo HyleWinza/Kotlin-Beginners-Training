@@ -33,7 +33,7 @@ class PostsAdapter() : RecyclerView.Adapter<PostsAdapter.ViewHolder>() {
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val model = posts.get(position)
 
-        holder.view.heading.text = model.title
+        holder.view.title.text = model.title
         holder.view.body.text = model.body
     }
 
