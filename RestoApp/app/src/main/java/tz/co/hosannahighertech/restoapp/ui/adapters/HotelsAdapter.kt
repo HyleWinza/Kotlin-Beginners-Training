@@ -14,6 +14,14 @@ class HotelsAdapter : Adapter<HotelsAdapter.ViewHolder>() {
 
     private val hotelsList: MutableList<Hotel> = mutableListOf()
 
+
+    fun update(hotels: List<Hotel>) {
+        hotelsList.clear()
+        hotels.forEach { hotelsList.add(it)}
+
+        notifyDataSetChanged()
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, position: Int): ViewHolder {
 
         val view = LayoutInflater.from(parent.context).inflate(R.layout.hotels_list_item, parent, false)
