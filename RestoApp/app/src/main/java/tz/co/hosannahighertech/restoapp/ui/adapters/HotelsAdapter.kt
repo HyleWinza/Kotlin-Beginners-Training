@@ -9,8 +9,9 @@ import com.bumptech.glide.Glide
 import kotlinx.android.synthetic.main.hotels_list_item.view.*
 import tz.co.hosannahighertech.restoapp.R
 import tz.co.hosannahighertech.restoapp.data.models.Hotel
+import tz.co.hosannahighertech.restoapp.interfaces.HotelClickListerner
 
-class HotelsAdapter : Adapter<HotelsAdapter.ViewHolder>() {
+class HotelsAdapter(val clickListerner: HotelClickListerner) : Adapter<HotelsAdapter.ViewHolder>() {
 
     private val hotelsList: MutableList<Hotel> = mutableListOf()
 
@@ -43,6 +44,11 @@ class HotelsAdapter : Adapter<HotelsAdapter.ViewHolder>() {
         Glide.with(vh.view.context)
             .load(hotel.logo)
             .into(vh.view.logo)
+
+        vh.view.card.setOnClickListener{
+            clickListerner.onClick(hotel)
+        }
+
     }
 
 

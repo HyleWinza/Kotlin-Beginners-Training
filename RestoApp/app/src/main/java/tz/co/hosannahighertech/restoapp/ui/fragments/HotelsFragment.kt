@@ -2,6 +2,7 @@ package tz.co.hosannahighertech.restoapp.ui.fragments
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProviders
+import android.content.Intent
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.DefaultItemAnimator
@@ -13,13 +14,17 @@ import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.hotels_fragment.*
 import tz.co.hosannahighertech.restoapp.R
+import tz.co.hosannahighertech.restoapp.data.models.Hotel
+import tz.co.hosannahighertech.restoapp.interfaces.HotelClickListerner
 import tz.co.hosannahighertech.restoapp.ui.activities.MainActivity
+import tz.co.hosannahighertech.restoapp.ui.activities.MenuActivity
 import tz.co.hosannahighertech.restoapp.ui.adapters.HotelsAdapter
 import tz.co.hosannahighertech.restoapp.ui.viewmodels.HotelsViewModel
+import tz.co.hosannahighertech.restoapp.utilities.Constants
 
-class HotelsFragment : Fragment() {
+class HotelsFragment : Fragment(), HotelClickListerner {
 
-    private val adapter = HotelsAdapter()
+    private val adapter = HotelsAdapter(this)
 
     companion object {
         fun newInstance() = HotelsFragment()
@@ -36,7 +41,7 @@ class HotelsFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this!!.activity!!).get(HotelsViewModel::class.java)
+        viewModel = ViewModelProviders.of(this.activity!!).get(HotelsViewModel::class.java)
 
         hotelsList.itemAnimator = DefaultItemAnimator()
         hotelsList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -61,5 +66,13 @@ class HotelsFragment : Fragment() {
         })
 
         viewModel.loadHotels()
+    }
+
+    override fun onClick(hotel: Hotel) {
+        Intent(activity, MenuActivity::class.java).apply {
+            putExtra(Constants.HOTEL_NAME, hotel.name)
+            putExtra(Constants.HOTEL_ID, hotel.id)
+            activity?.startActivity(this)
+        }
     }
 }
